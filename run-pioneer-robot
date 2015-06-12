@@ -1,0 +1,60 @@
+#!/bin/bash
+
+echo "Launching roscore..."
+roscore &
+pid=$!
+sleep 3s
+
+echo "Connecting to RosAria..."
+rosrun rosaria RosAria &
+pid="$! $pid"
+sleep 3s
+
+echo "Launching publishers..."
+rosrun pioneer_test pioneer_tf_broadcaster &
+pid="$! $pid"
+
+rosrun pioneer_test pioneer_odometry_publisher &
+pid="$! $pid"
+
+roslaunch rplidar_ros rplidar.launch &
+pid="$! $pid"
+
+rosrun pioneer_test laser_tf_broadcaster &
+pid="$! $pid"
+
+rosrun pioneer_test rplidar_laser_publisher &
+pid="$! $pid"
+
+rosrun pioneer_test rplidar_laser_republisher &
+pid="$! $pid"
+
+sleep 3s
+
+echo "Launching gmapping..."
+rosrun gmapping slam_gmapping scan:=/laserScan &
+pid="$! $pid"
+
+echo "Launching navigation stack..."
+roslaunch pioneer_2dnav move_base.launch &
+pid="$! $pid"
+
+sleep 3s
+
+echo "Launching rviz..."
+rosrun rviz rviz -d "$(rospack find pioneer_test)/pioneer_test_rviz_config.rviz" &
+pid="$! $pid"
+
+sleep 3s
+
+echo "Launching pioneer controller..."
+rosparam load "$(rospack find pioneer_test)/pioneer_controller_params.yaml" pioneer_test &
+
+sleep 1s
+
+rosrun pioneer_test pioneer_pid_controller &
+pid="$! $pid"
+
+trap "echo Killing all processes.; kill -2 $pid; exit" SIGINT SIGTERM
+
+sleep 24h
