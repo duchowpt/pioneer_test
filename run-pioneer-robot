@@ -11,10 +11,10 @@ pid="$! $pid"
 sleep 3s
 
 echo "Launching publishers..."
-rosrun pioneer_test pioneer_tf_broadcaster &
+rosrun pioneer_test pioneer3dx_tf_broadcaster &
 pid="$! $pid"
 
-rosrun pioneer_test pioneer_odometry_publisher &
+rosrun pioneer_test pioneer3dx_odometry_publisher &
 pid="$! $pid"
 
 roslaunch rplidar_ros rplidar.launch &
@@ -52,7 +52,7 @@ rosparam load "$(rospack find pioneer_test)/pioneer_controller_params.yaml" pion
 
 sleep 1s
 
-rosrun pioneer_test pioneer_pid_controller &
+rosrun pioneer_test pioneer3dx_pid_controller &
 pid="$! $pid"
 
 trap "echo Killing all processes.; kill -2 $pid; exit" SIGINT SIGTERM

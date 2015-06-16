@@ -21,13 +21,13 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
 )
 
-add_executable(pioneer_tf_broadcaster src/pioneer_tf_broadcaster.cpp)
-target_link_libraries(pioneer_tf_broadcaster ${catkin_LIBRARIES})
-add_dependencies(pioneer_tf_broadcaster ${catkin_EXPORTED_TARGETS})
+add_executable(pioneer3dx_tf_broadcaster src/pioneer3dx_tf_broadcaster.cpp)
+target_link_libraries(pioneer3dx_tf_broadcaster ${catkin_LIBRARIES})
+add_dependencies(pioneer3dx_tf_broadcaster ${catkin_EXPORTED_TARGETS})
 
-add_executable(pioneer_odometry_publisher src/pioneer_odometry_publisher.cpp)
-target_link_libraries(pioneer_odometry_publisher ${catkin_LIBRARIES})
-add_dependencies(pioneer_odometry_publisher ${catkin_EXPORTED_TARGETS})
+add_executable(pioneer3dx_odometry_publisher src/pioneer3dx_odometry_publisher.cpp)
+target_link_libraries(pioneer3dx_odometry_publisher ${catkin_LIBRARIES})
+add_dependencies(pioneer3dx_odometry_publisher ${catkin_EXPORTED_TARGETS})
 
 add_executable(laser_tf_broadcaster src/laser_tf_broadcaster.cpp)
 target_link_libraries(laser_tf_broadcaster ${catkin_LIBRARIES})
@@ -41,9 +41,9 @@ add_executable(rplidar_laser_republisher src/rplidar_laser_republisher.cpp)
 target_link_libraries(rplidar_laser_republisher ${catkin_LIBRARIES})
 add_dependencies(rplidar_laser_republisher ${catkin_EXPORTED_TARGETS})
 
-add_executable(pioneer_pid_controller src/pioneer_pid_controller.cpp)
-target_link_libraries(pioneer_pid_controller ${catkin_LIBRARIES})
-add_dependencies(pioneer_pid_controller ${catkin_EXPORTED_TARGETS})
+add_executable(pioneer3dx_pid_controller src/pioneer3dx_pid_controller.cpp)
+target_link_libraries(pioneer3dx_pid_controller ${catkin_LIBRARIES})
+add_dependencies(pioneer3dx_pid_controller ${catkin_EXPORTED_TARGETS})
 
 #set the default path for built executables to the "bin" directory
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
