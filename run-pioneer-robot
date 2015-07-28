@@ -55,6 +55,21 @@ sleep 1s
 rosrun pioneer_test pioneer3dx_pid_controller &
 pid="$! $pid"
 
+echo "Waypoint commander..."
+rosparam load "$(rospack find simple_navigation_goals)/initial_goal.yaml" simple_navigation_goals &
+
+sleep 1s
+
+rosrun simple_navigation_goals publish_base_link_goal &
+pid="$! $pid"
+rosrun simple_navigation_goals base_link_navigation_client &
+pid="$! $pid"
+
+rosrun simple_navigation_goals publish_map_goal &
+pid="$! $pid"
+rosrun simple_navigation_goals map_navigation_client &
+pid="$! $pid"
+
 trap "echo Killing all processes.; kill -2 $pid; exit" SIGINT SIGTERM
 
 sleep 24h
