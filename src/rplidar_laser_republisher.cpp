@@ -14,7 +14,8 @@ void laserCallback(const sensor_msgs::LaserScan& msg)
     
   for (int ii = 0; ii < n_scans; ii++)
   {
-    newscan.ranges[ii] = msg.ranges[n_scans-ii-1];
+    //newscan.ranges[ii] = msg.ranges[n_scans-ii-1];
+    newscan.ranges[ii] = msg.ranges[ii];
   }
   
   pub.publish(newscan);
