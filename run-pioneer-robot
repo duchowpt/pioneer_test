@@ -3,7 +3,7 @@
 echo "Launching roscore..."
 roscore &
 pid=$!
-sleep 3s
+sleep 5s
 
 echo "Connecting to RosAria..."
 rosrun rosaria RosAria &
