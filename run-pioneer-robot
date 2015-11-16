@@ -10,73 +10,42 @@ rosrun rosaria RosAria &
 pid="$! $pid"
 sleep 3s
 
-echo "Launching publishers..."
-# Handled by RosAria
-#rosrun pioneer_test pioneer3dx_tf_broadcaster &
+#echo "Launching publishers..."
+
+#rosrun pioneer_test pioneer3dx_odometry_publisher &
 #pid="$! $pid"
 
-rosrun pioneer_test pioneer3dx_odometry_publisher &
-pid="$! $pid"
+#roslaunch rplidar_ros rplidar.launch &
+#pid="$! $pid"
 
-roslaunch rplidar_ros rplidar.launch &
-pid="$! $pid"
+#rosrun pioneer_test laser_tf_broadcaster &
+#pid="$! $pid"
 
-rosrun pioneer_test laser_tf_broadcaster &
-pid="$! $pid"
+#rosrun pioneer_test rplidar_laser_publisher &
+#pid="$! $pid"
 
-rosrun pioneer_test rplidar_laser_publisher &
-pid="$! $pid"
+#rosrun pioneer_test rplidar_laser_republisher &
+#pid="$! $pid"
 
-rosrun pioneer_test rplidar_laser_republisher &
+echo "Launching sensors..."
+roslaunch pioneer_test pioneer_sensors.launch &
 pid="$! $pid"
 
 sleep 3s
-
-echo "Launching gmapping..."
-rosrun gmapping slam_gmapping scan:=/laserScan &
-pid="$! $pid"
 
 echo "Launching navigation stack..."
-roslaunch pioneer_2dnav move_base.launch &
-pid="$! $pid"
-
-sleep 3s
-
-echo "Launching rviz..."
-rosrun rviz rviz -d "$(rospack find pioneer_test)/pioneer_test_rviz_config.rviz" &
+roslaunch nav_bundle nav_bundle.launch &
 pid="$! $pid"
 
 sleep 3s
 
 echo "Launching pioneer controller..."
-rosparam load "$(rospack find pioneer_test)/pioneer_controller_params.yaml" pioneer_test &
+roslaunch pioneer_test pioneer_controller.launch &
 
-sleep 1s
+sleep 3s
 
-rosrun pioneer_test pioneer3dx_pid_controller &
-pid="$! $pid"
-
-echo "Waypoint commander..."
-rosparam load "$(rospack find simple_navigation_goals)/initial_goal.yaml" simple_navigation_goals &
-
-sleep 1s
-
-rosrun simple_navigation_goals publish_base_link_goal &
-pid="$! $pid"
-rosrun simple_navigation_goals base_link_navigation_client &
-pid="$! $pid"
-
-rosrun simple_navigation_goals publish_map_goal &
-pid="$! $pid"
-rosrun simple_navigation_goals map_navigation_client &
-pid="$! $pid"
-
-echo "Launching leg detector"
-rosrun leg_detector leg_detector scan:=/laserScan $(rospack find leg_detector)/config/trained_leg_detector.yaml &
-pid="$! $pid"
-
-echo "Launching POI state publisher"
-rosrun nn_control_input_filter poi_state_publisher &
+echo "Launching rviz..."
+rosrun rviz rviz -d "$(rospack find pioneer_test)/pioneer_test_rviz_config.rviz" &
 pid="$! $pid"
 
 sleep 1s
