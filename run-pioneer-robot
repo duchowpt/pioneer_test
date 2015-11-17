@@ -10,23 +10,6 @@ rosrun rosaria RosAria &
 pid="$! $pid"
 sleep 3s
 
-#echo "Launching publishers..."
-
-#rosrun pioneer_test pioneer3dx_odometry_publisher &
-#pid="$! $pid"
-
-#roslaunch rplidar_ros rplidar.launch &
-#pid="$! $pid"
-
-#rosrun pioneer_test laser_tf_broadcaster &
-#pid="$! $pid"
-
-#rosrun pioneer_test rplidar_laser_publisher &
-#pid="$! $pid"
-
-#rosrun pioneer_test rplidar_laser_republisher &
-#pid="$! $pid"
-
 echo "Launching sensors..."
 roslaunch pioneer_test pioneer_sensors.launch &
 pid="$! $pid"
@@ -41,6 +24,7 @@ sleep 3s
 
 echo "Launching pioneer controller..."
 roslaunch pioneer_test pioneer_controller.launch &
+pid="$! $pid"
 
 sleep 3s
 
