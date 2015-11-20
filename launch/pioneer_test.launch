@@ -12,5 +12,5 @@
   <include file="$(find pioneer_test)/launch/pioneer_controller.launch"/>
   
   <!-- Visualise -->
-  <node pkg="rviz" type="rviz" name="rviz" args="-d $(rospack find pioneer_test)/pioneer_test_rviz_config.rviz">
+  <node pkg="rviz" type="rviz" name="rviz" args="-d $(rospack find pioneer_test)/pioneer_test_rviz_config.rviz"/>
 </launch>
