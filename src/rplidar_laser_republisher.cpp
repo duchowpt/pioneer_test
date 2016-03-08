@@ -26,7 +26,7 @@ int main(int argc, char **argv)
   ros::init(argc, argv, "rplidar_laser_republisher");
 
   ros::NodeHandle nHandpub;
-  pub = nHandpub.advertise<sensor_msgs::LaserScan>("/laserScan", 10);
+  pub = nHandpub.advertise<sensor_msgs::LaserScan>("/base_scan", 10);
   
   ros::NodeHandle nHandsub;  
   ros::Subscriber sub = nHandsub.subscribe("/rplidar_scan", 10, &laserCallback);
