@@ -34,6 +34,11 @@ pid="$! $pid"
 
 sleep 1s
 
+echo "Launching estop..."
+rqt --standalone rqt_estop
+
+sleep 1s
+
 trap "echo Killing all processes.; kill -2 $pid; exit" SIGINT SIGTERM
 
 sleep 24h
