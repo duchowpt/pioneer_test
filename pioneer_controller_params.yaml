@@ -23,6 +23,6 @@ controller_gains:
             i: 0.01
             d: 0.1
         angular:
-            p: -1.00
+            p: 1.00
             i: 0.01
             d: 0.1
