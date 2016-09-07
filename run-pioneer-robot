@@ -34,8 +34,8 @@ pid="$! $pid"
 
 sleep 1s
 
-echo "Launching estop..."
-rqt --standalone rqt_estop
+#echo "Launching estop..."
+#rqt --standalone rqt_estop
 
 sleep 1s
 
