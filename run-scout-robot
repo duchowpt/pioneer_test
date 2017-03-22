@@ -1,0 +1,54 @@
+#!/bin/bash
+export HOSTNAME
+echo "Launching gateway..."
+roslaunch pioneer_rocon_test pioneer_gateway.launch &
+pid=$!
+sleep 5s
+
+echo "Connecting to RosAria..."
+rosrun rosaria RosAria &
+pid="$! $pid"
+sleep 3s
+
+echo "Launching sensors..."
+roslaunch pioneer_test pioneer_sensors.launch &
+pid="$! $pid"
+
+sleep 3s
+
+#TODO: Add params in properly, because this probably doesn't work
+echo "Launching navigation stack..."
+roslaunch nav_bundle single_navigation_scout.launch robot_name:=$HOSTNAME &
+pid="$pid $!"
+
+sleep 5s
+
+roslaunch scout_service generic_scout.launch robot_name:=$HOSTNAME &
+pid="$pid $!"
+
+sleep 5s
+
+echo "Launching pioneer controller..."
+roslaunch pioneer_test pioneer_controller_spin_recover.launch &
+pid="$! $pid"
+
+sleep 3s
+
+echo "Launching POI detector"
+rosrun curve_detector curve_detector &
+pid="$! $pid"
+
+echo "Launching rviz..."
+rosrun rviz rviz -d "$(rospack find pioneer_test)/pioneer_test_frontier_rviz_config.rviz" & #TODO: make a rviz config for this
+pid="$! $pid"
+
+sleep 1s
+
+#echo "Launching estop..."
+#rqt --standalone rqt_estop
+
+sleep 1s
+
+trap "echo Killing all processes.; kill -2 $pid; exit" SIGINT SIGTERM
+
+sleep 24h
