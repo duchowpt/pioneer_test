@@ -23,19 +23,19 @@ pid="$! $pid"
 sleep 3s
 
 echo "Launching pioneer controller..."
-roslaunch pioneer_test pioneer_controller.launch &
+roslaunch pioneer_test pioneer_controller_spin_recover.launch &
 pid="$! $pid"
 
 sleep 3s
 
 echo "Launching rviz..."
-rosrun rviz rviz -d "$(rospack find pioneer_test)/pioneer_test_rviz_config.rviz" &
+rosrun rviz rviz -d "$(rospack find pioneer_test)/pioneer_test_frontier_rviz_config.rviz" &
 pid="$! $pid"
 
 sleep 1s
 
-echo "Launching estop..."
-rqt --standalone rqt_estop
+#echo "Launching estop..."
+#rqt --standalone rqt_estop
 
 sleep 1s
 

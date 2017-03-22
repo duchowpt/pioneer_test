@@ -29,6 +29,10 @@ add_executable(pioneer3dx_odometry_publisher src/pioneer3dx_odometry_publisher.c
 target_link_libraries(pioneer3dx_odometry_publisher ${catkin_LIBRARIES})
 add_dependencies(pioneer3dx_odometry_publisher ${catkin_EXPORTED_TARGETS})
 
+add_executable(odom_map_frame_publisher src/odom_map_frame_publisher.cpp)
+target_link_libraries(odom_map_frame_publisher ${catkin_LIBRARIES})
+add_dependencies(odom_map_frame_publisher ${catkin_EXPORTED_TARGETS})
+
 add_executable(laser_tf_broadcaster src/laser_tf_broadcaster.cpp)
 target_link_libraries(laser_tf_broadcaster ${catkin_LIBRARIES})
 add_dependencies(laser_tf_broadcaster ${catkin_EXPORTED_TARGETS})
