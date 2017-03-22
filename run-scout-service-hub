@@ -1,0 +1,29 @@
+#!/bin/bash
+
+export HOSTNAME
+
+echo 'Launching hub and gateway'
+rosrun pioneer_networking run-pioneer-hub &
+pid="$! $pid"
+sleep 5s
+
+export ROS_MASTER_URI='http://localhost:11312'
+
+echo "Launching rover list manager..."
+roslaunch scout_service rover_lists.launch &
+pid="$! $pid"
+
+sleep 3s
+
+advertise_topics=('/scout_list' '/service_list' '/known_pois' '/pioneer1/discovered_POIs' '/pioneer1/scout_position' '/pioneer2/scout_position' '/pioneer2/serviced_POIs' '/pioneer3/scout_position' '/pioneer3/serviced_POIs')
+
+echo 'Preparing to advertise topics'
+for i in ${advertise_topics[@]}; do
+  echo 'advertising' $i
+  rosrun rocon_flip generic_advertiser.py -t $i
+
+done
+
+trap "echo Killing all processes.; kill -2 $pid; exit" SIGINT SIGTERM
+
+
